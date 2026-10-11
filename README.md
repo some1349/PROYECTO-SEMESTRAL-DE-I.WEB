@@ -32,6 +32,7 @@ Tiene tres tipos de usuario:
 ```
 .
 ├── Documentación/   Entregables de cada fase (documentos en PDF)
+├── Prototipo/       Prototipo navegable de la Fase 2 (HTML, CSS y JavaScript)
 ├── Autoría/         Anexo de autoría y uso de la IA
 └── README.md
 ```
@@ -55,6 +56,30 @@ El documento de la Fase 1 contiene:
 7. Modelo de clases
 8. Modelo de navegación inicial
 9. Matriz de trazabilidad (objetivos, requisitos funcionales, usuario, escenarios, casos de uso y clases)
+
+### Fase 2: Propuesta de interfaz y navegación
+
+El documento de la Fase 2 contiene:
+
+1. Arquitectura de información: contenido principal, agrupaciones y categorías, jerarquía, sistema de etiquetas y mecanismos de acceso
+2. Sitemap
+3. Navegación refinada: tipos de navegación, menús por rol, modelo de navegación y reglas
+4. Flujos de navegación (6 recorridos de las tareas principales)
+5. Wireframes (15 pantallas)
+6. Prototipo: acceso, lineamientos visuales y pantallas principales (escritorio y móvil)
+
+#### Prototipo
+
+El prototipo está en la carpeta `Prototipo`, hecho solo con HTML, CSS y JavaScript, sin librerías ni servidor:
+
+| Archivo | Contenido |
+|---|---|
+| `index.html` | Estructura de todas las pantallas |
+| `estilos.css` | Diseño: Flexbox, CSS Grid y diseño responsivo |
+| `datos.js` | Datos de ejemplo (instalaciones, reservas, usuarios y menús) |
+| `app.js` | Lógica: navegación entre pantallas, menús por rol, validación de formularios y acciones |
+
+Para usarlo, abre `index.html` en cualquier navegador. Desde la primera pantalla se puede entrar como **Cliente**, **Personal operativo** o **Administrador**. Los datos son de ejemplo y se reinician al recargar la página.
 
 El anexo de **Autoría e IA** (tabla de aportes individuales, uso de la IA y prompts más relevantes) está en la carpeta `Autoría`.
 
