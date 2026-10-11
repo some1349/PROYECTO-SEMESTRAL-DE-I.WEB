@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SportRes - Prototipo</title>
+  <link rel="stylesheet" href="estilos.css">
+</head>
+<body>
+
+  <!-- ENCABEZADO: logo, menú (se llena con JavaScript según el rol) y usuario -->
+  <header>
+    <span class="logo">SportRes</span>
+    <nav id="menu" aria-label="Menú principal"></nav>
+    <span id="usuario"></span>
+  </header>
+
+  <div class="contenedor">
+  <!-- Menú lateral: solo lo usa el administrador -->
+  <aside id="lateral" class="lateral oculta" aria-label="Menú del administrador"></aside>
+  <main>
+    <!-- Ruta de migas de pan y mensajes para lectores de pantalla -->
+    <p id="ruta" class="ruta"></p>
+    <p id="mensaje" class="mensaje oculta" role="status" aria-live="polite"></p>
+
+    <!-- ===================== ACCESO ===================== -->
+    <section id="login" class="pantalla">
+      <h1 tabindex="-1">Iniciar sesión</h1>
+      <p class="sub">Reserva canchas deportivas en pocos pasos.</p>
+      <form id="form-login" class="tarjeta angosta" novalidate>
+        <label for="login-correo">Correo electrónico</label>
+        <input type="email" id="login-correo" placeholder="correo@ejemplo.com">
+        <p class="error" id="error-login-correo"></p>
+
+        <label for="login-clave">Contraseña</label>
+        <input type="password" id="login-clave">
+        <p class="error" id="error-login-clave"></p>
+
+        <button type="submit" class="boton">Iniciar sesión</button>
+        <p>¿No tienes cuenta? <button type="button" class="enlace" data-ir="registro">Regístrate</button></p>
+      </form>
+      <div class="tarjeta angosta">
+        <strong>Entrar como (demostración)</strong><br>
+        <button type="button" class="boton claro" data-rol="cliente">Cliente</button>
+        <button type="button" class="boton claro" data-rol="operativo">Personal operativo</button>
+        <button type="button" class="boton claro" data-rol="admin">Administrador</button>
+      </div>
+    </section>
+
+    <section id="registro" class="pantalla oculta">
+      <h1 tabindex="-1">Crear cuenta</h1>
+      <form id="form-registro" class="tarjeta angosta" novalidate>
+        <fieldset>
+          <legend>Datos personales</legend>
+          <label for="reg-nombre">Nombre completo</label>
+          <input type="text" id="reg-nombre">
+          <p class="error" id="error-reg-nombre"></p>
+          <label for="reg-correo">Correo electrónico</label>
+          <input type="email" id="reg-correo">
+          <p class="error" id="error-reg-correo"></p>
+          <label for="reg-clave">Contraseña (mínimo 6 caracteres)</label>
+          <input type="password" id="reg-clave">
+          <p class="error" id="error-reg-clave"></p>
+        </fieldset>
+        <button type="submit" class="boton">Crear cuenta</button>
+        <button type="button" class="boton claro" data-ir="login">Ya tengo cuenta</button>
+      </form>
+    </section>
+
+    <!-- ===================== CLIENTE ===================== -->
+    <section id="buscar" class="pantalla oculta">
+      <h1 tabindex="-1">Buscar instalaciones</h1>
+      <p class="sub">Paso 1 de 3: elige una instalación.</p>
+      <div class="tarjeta">
+        <div class="fila">
+          <div>
+            <label for="filtro-deporte">Deporte</label>
+            <select id="filtro-deporte">
+              <option value="todos">Todos</option>
+              <option>Fútbol</option>
+              <option>Baloncesto</option>
+              <option>Pádel</option>
+            </select>
+          </div>
+          <div>
+            <label for="filtro-fecha">Fecha</label>
+            <input type="date" id="filtro-fecha" value="2026-10-15">
+          </div>
+        </div>
+      </div>
+      <div id="lista-instalaciones" class="cuadricula"></div>
+    </section>
+
+    <section id="detalle" class="pantalla oculta">
+      <h1 tabindex="-1" id="detalle-titulo">Instalación</h1>
+      <p class="sub">Paso 2 de 3: elige un horario.</p>
+      <div class="tarjeta" id="detalle-info"></div>
+      <div class="tarjeta">
+        <h2>Horarios disponibles</h2>
+        <div id="lista-horarios" class="horarios"></div>
+        <p class="sub">Los horarios tachados no están disponibles.</p>
+      </div>
+      <button type="button" class="boton claro" data-ir="buscar">Volver</button>
+    </section>
+
+    <section id="confirmar" class="pantalla oculta">
+      <h1 tabindex="-1">Confirmar reserva</h1>
+      <p class="sub">Paso 3 de 3: revisa los datos y confirma.</p>
+      <div class="tarjeta">
+        <table id="tabla-confirmar"></table>
+        <button type="button" class="boton" id="btn-confirmar">Confirmar reserva</button>
+        <button type="button" class="boton claro" data-ir="detalle">Cambiar horario</button>
+      </div>
+    </section>
+
+    <section id="exito" class="pantalla oculta">
+      <h1 tabindex="-1">¡Reserva confirmada!</h1>
+      <div class="tarjeta">
+        <p class="aviso" id="exito-texto"></p>
+        <button type="button" class="boton" data-ir="mis-reservas">Ver mis reservas</button>
+        <button type="button" class="boton claro" data-ir="buscar">Hacer otra reserva</button>
+      </div>
+    </section>
+
+    <section id="mis-reservas" class="pantalla oculta">
+      <h1 tabindex="-1">Mis reservas</h1>
+      <div class="tabla-caja"><table id="tabla-mis-reservas"></table></div>
+      <button type="button" class="boton" data-ir="buscar">Nueva reserva</button>
+    </section>
+
+    <section id="modificar" class="pantalla oculta">
+      <h1 tabindex="-1">Modificar reserva</h1>
+      <form id="form-modificar" class="tarjeta angosta" novalidate>
+        <p id="modificar-info"></p>
+        <label for="mod-fecha">Nueva fecha</label>
+        <input type="date" id="mod-fecha">
+        <p class="error" id="error-mod-fecha"></p>
+        <label for="mod-hora">Nuevo horario</label>
+        <select id="mod-hora"></select>
+        <button type="submit" class="boton">Guardar cambios</button>
+        <button type="button" class="boton claro" data-ir="mis-reservas">Cancelar</button>
+      </form>
+    </section>
+
+    <section id="perfil" class="pantalla oculta">
+      <h1 tabindex="-1">Mi perfil</h1>
+      <form id="form-perfil" class="tarjeta angosta" novalidate>
+        <label for="perfil-nombre">Nombre</label>
+        <input type="text" id="perfil-nombre" value="Ana Pérez">
+        <p class="error" id="error-perfil-nombre"></p>
+        <label for="perfil-correo">Correo</label>
+        <input type="email" id="perfil-correo" value="ana@ejemplo.com">
+        <button type="submit" class="boton">Guardar</button>
+      </form>
+    </section>
+
+    <!-- ===================== PERSONAL OPERATIVO ===================== -->
+    <section id="op-dia" class="pantalla oculta">
+      <h1 tabindex="-1">Reservas del día</h1>
+      <p class="sub">Registra la llegada de los clientes (check-in).</p>
+      <div class="tabla-caja"><table id="tabla-dia"></table></div>
+    </section>
+
+    <section id="presencial" class="pantalla oculta">
+      <h1 tabindex="-1">Reserva presencial</h1>
+      <form id="form-presencial" class="tarjeta angosta" novalidate>
+        <label for="pres-nombre">Nombre del cliente</label>
+        <input type="text" id="pres-nombre">
+        <p class="error" id="error-pres-nombre"></p>
+        <label for="pres-instalacion">Instalación</label>
+        <select id="pres-instalacion"></select>
+        <label for="pres-hora">Horario (hoy)</label>
+        <select id="pres-hora"></select>
+        <button type="submit" class="boton">Registrar reserva</button>
+      </form>
+    </section>
+
+    <section id="disponibilidad" class="pantalla oculta">
+      <h1 tabindex="-1">Disponibilidad</h1>
+      <p class="sub">Estado de cada instalación hoy (15/10/2026).</p>
+      <div class="tabla-caja"><table id="tabla-disponibilidad"></table></div>
+    </section>
+
+    <!-- ===================== ADMINISTRADOR ===================== -->
+    <section id="a-panel" class="pantalla oculta">
+      <h1 tabindex="-1">Panel del administrador</h1>
+      <div class="cuadricula" id="indicadores"></div>
+      <div class="tarjeta">
+        <h2>Accesos rápidos</h2>
+        <button type="button" class="boton" data-ir="a-instalaciones">Instalaciones y horarios</button>
+        <button type="button" class="boton" data-ir="a-bloqueos">Bloqueos</button>
+        <button type="button" class="boton" data-ir="a-reportes">Reportes</button>
+        <button type="button" class="boton" data-ir="a-usuarios">Usuarios y roles</button>
+      </div>
+    </section>
+
+    <section id="a-instalaciones" class="pantalla oculta">
+      <h1 tabindex="-1">Instalaciones y horarios</h1>
+      <div class="tabla-caja"><table id="tabla-instalaciones"></table></div>
+    </section>
+
+    <section id="a-bloqueos" class="pantalla oculta">
+      <h1 tabindex="-1">Bloqueos de horario</h1>
+      <form id="form-bloqueo" class="tarjeta angosta" novalidate>
+        <label for="blq-instalacion">Instalación</label>
+        <select id="blq-instalacion"></select>
+        <label for="blq-hora">Horario (hoy)</label>
+        <select id="blq-hora"></select>
+        <label for="blq-motivo">Motivo</label>
+        <input type="text" id="blq-motivo" placeholder="Ej.: mantenimiento">
+        <p class="error" id="error-blq-motivo"></p>
+        <button type="submit" class="boton">Bloquear horario</button>
+      </form>
+      <div class="tabla-caja"><table id="tabla-bloqueos"></table></div>
+    </section>
+
+    <section id="a-reportes" class="pantalla oculta">
+      <h1 tabindex="-1">Reportes</h1>
+      <div class="tabla-caja"><table id="tabla-reportes"></table></div>
+      <p class="sub">Los ingresos cuentan solo las reservas asistidas.</p>
+    </section>
+
+    <section id="a-usuarios" class="pantalla oculta">
+      <h1 tabindex="-1">Usuarios y roles</h1>
+      <div class="tabla-caja"><table id="tabla-usuarios"></table></div>
+    </section>
+  </main>
+  </div>
+
+  <footer>
+    SportRes · Prototipo · Grupo 2 · 1SF133 · Ingeniería Web
+  </footer>
+
+  <!-- Primero los datos, luego la lógica (defer: se ejecuta cuando el HTML ya cargó) -->
+  <script src="datos.js" defer></script>
+  <script src="app.js" defer></script>
+</body>
+</html>
