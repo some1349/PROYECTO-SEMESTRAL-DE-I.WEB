@@ -32,7 +32,7 @@ Tiene tres tipos de usuario:
 ```
 .
 ├── Documentación/   Entregables de cada fase (documentos en PDF)
-├── Prototipo/       Prototipo navegable de la Fase 2 (HTML, CSS y JavaScript)
+├── PROTOTIPO/       Prototipo navegable de la Fase 2 (HTML, CSS y JavaScript)
 ├── Autoría/         Anexo de autoría y uso de la IA
 └── README.md
 ```
@@ -68,7 +68,7 @@ El documento de la Fase 2 contiene:
 5. Wireframes (15 pantallas)
 6. Prototipo: acceso, lineamientos visuales y pantallas principales (escritorio y móvil)
 
-#### Prototipo
+#### PROTOTIPO
 
 El prototipo está en la carpeta `Prototipo`, hecho solo con HTML, CSS y JavaScript, sin librerías ni servidor:
 
