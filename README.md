@@ -33,7 +33,8 @@ Tiene tres tipos de usuario:
 .
 ├── Documentación/    Entregables de cada fase (documentos en PDF)
 ├── PROTOTIPO/        Prototipo navegable de la Fase 2 (HTML, CSS y JavaScript)
-├── FASE3-FRONTEND/   Primera versión implementada del frontend (Fase 3)
+├── SPORTRES FRONTEND/
+│   └── FASE3-FRONTEND/   Primera versión implementada del frontend (Fase 3)
 ├── Autoría/          Anexo de autoría y uso de la IA
 └── README.md
 ```
@@ -84,7 +85,7 @@ Para usarlo, abre `index.html` en cualquier navegador. Desde la primera pantalla
 
 ### Fase 3: Implementación frontend y diseño responsive
 
-Primera versión implementada de la aplicación, a partir de los diseños de la Fase 2. Está en la carpeta `FASE3-FRONTEND`, hecha con HTML, CSS y JavaScript, sin librerías ni servidor. Todavía no está conectada a una base de datos: los datos son de ejemplo y se reinician al recargar la página.
+Primera versión implementada de la aplicación, a partir de los diseños de la Fase 2. Está en la carpeta `SPORTRES FRONTEND/FASE3-FRONTEND`, hecha con HTML, CSS y JavaScript, sin librerías ni servidor. Todavía no está conectada a una base de datos: los datos son de ejemplo y se reinician al recargar la página.
 
 | Archivo | Contenido |
 |---|---|
@@ -94,7 +95,7 @@ Primera versión implementada de la aplicación, a partir de los diseños de la 
 | `app.js` | Navegación, validación de formularios, pantallas por rol y opciones de accesibilidad |
 | `docs/contraste.py` y `docs/contraste.txt` | Verificación del contraste de los colores (WCAG AA) en ambos temas |
 
-Para usarla, abre `FASE3-FRONTEND/index.html` en cualquier navegador y entra como **Cliente**, **Personal operativo** o **Administrador**.
+Para usarla, abre `SPORTRES FRONTEND/FASE3-FRONTEND/index.html` en cualquier navegador y entra como **Cliente**, **Personal operativo** o **Administrador**.
 
 **Qué incluye**
 
