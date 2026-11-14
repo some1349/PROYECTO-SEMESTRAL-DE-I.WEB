@@ -31,9 +31,10 @@ Tiene tres tipos de usuario:
 
 ```
 .
-├── Documentación/   Entregables de cada fase (documentos en PDF)
-├── PROTOTIPO/       Prototipo navegable de la Fase 2 (HTML, CSS y JavaScript)
-├── Autoría/         Anexo de autoría y uso de la IA
+├── Documentación/    Entregables de cada fase (documentos en PDF)
+├── PROTOTIPO/        Prototipo navegable de la Fase 2 (HTML, CSS y JavaScript)
+├── FASE3-FRONTEND/   Primera versión implementada del frontend (Fase 3)
+├── Autoría/          Anexo de autoría y uso de la IA
 └── README.md
 ```
 
@@ -68,9 +69,9 @@ El documento de la Fase 2 contiene:
 5. Wireframes (15 pantallas)
 6. Prototipo: acceso, lineamientos visuales y pantallas principales (escritorio y móvil)
 
-#### PROTOTIPO
+#### Prototipo
 
-El prototipo está en la carpeta `Prototipo`, hecho solo con HTML, CSS y JavaScript, sin librerías ni servidor:
+El prototipo está en la carpeta `PROTOTIPO`, hecho solo con HTML, CSS y JavaScript, sin librerías ni servidor:
 
 | Archivo | Contenido |
 |---|---|
@@ -80,6 +81,32 @@ El prototipo está en la carpeta `Prototipo`, hecho solo con HTML, CSS y JavaScr
 | `app.js` | Lógica: navegación entre pantallas, menús por rol, validación de formularios y acciones |
 
 Para usarlo, abre `index.html` en cualquier navegador. Desde la primera pantalla se puede entrar como **Cliente**, **Personal operativo** o **Administrador**. Los datos son de ejemplo y se reinician al recargar la página.
+
+### Fase 3: Implementación frontend y diseño responsive
+
+Primera versión implementada de la aplicación, a partir de los diseños de la Fase 2. Está en la carpeta `FASE3-FRONTEND`, hecha con HTML, CSS y JavaScript, sin librerías ni servidor. Todavía no está conectada a una base de datos: los datos son de ejemplo y se reinician al recargar la página.
+
+| Archivo | Contenido |
+|---|---|
+| `index.html` | Estructura semántica de todas las pantallas del sitemap |
+| `estilos.css` | Diseño visual: tema claro y oscuro, Flexbox, CSS Grid y diseño responsivo |
+| `datos.js` | Datos de ejemplo (instalaciones, reservas, usuarios, menús y permisos por rol) |
+| `app.js` | Navegación, validación de formularios, pantallas por rol y opciones de accesibilidad |
+| `docs/contraste.py` y `docs/contraste.txt` | Verificación del contraste de los colores (WCAG AA) en ambos temas |
+
+Para usarla, abre `FASE3-FRONTEND/index.html` en cualquier navegador y entra como **Cliente**, **Personal operativo** o **Administrador**.
+
+**Qué incluye**
+
+- **Navegación funcional:** menús por rol con enlaces reales, ruta de migas de pan y botón "Atrás" del navegador. Cada rol solo accede a sus pantallas.
+- **Formularios e interfaces:** inicio de sesión, registro, búsqueda de instalaciones, reserva en 3 pasos, modificar y cancelar reservas, perfil, check-in, reserva presencial, bloqueos, reportes y gestión de usuarios. Los formularios validan los datos y muestran mensajes de error claros.
+- **Diseño responsive:** se adapta a computadora y a celular (en celular las tablas pasan a tarjetas y el menú del administrador se coloca arriba).
+- **Accesibilidad:**
+  - HTML semántico, enlace "Saltar al contenido" y navegación completa con teclado.
+  - Foco visible, etiquetas y mensajes de error asociados a cada campo, y avisos para lectores de pantalla.
+  - Tema claro y oscuro (automático según el dispositivo o elegido con el botón "Tema") y ajuste del tamaño del texto.
+  - Contraste de colores de 4.5:1 como mínimo en textos (WCAG 2.1 AA), verificado en `docs/contraste.txt`.
+- **Correspondencia con el diseño:** mantiene las pantallas, los roles, los menús y el flujo de 3 pasos del prototipo, el sitemap y la navegación de la Fase 2.
 
 El anexo de **Autoría e IA** (tabla de aportes individuales, uso de la IA y prompts más relevantes) está en la carpeta `Autoría`.
 
