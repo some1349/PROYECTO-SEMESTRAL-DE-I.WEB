@@ -1,0 +1,22 @@
+SportRes - Fase 3: implementación frontend y diseño responsive
+Grupo 2 · 1SF133 · Ingeniería Web
+
+CÓMO ABRIRLO
+Abrir index.html con doble clic (Chrome, Edge o Firefox). No necesita servidor ni internet.
+
+ARCHIVOS
+index.html   Estructura (HTML semántico): todas las pantallas del sitemap como <section>
+estilos.css  Diseño visual: tema claro y oscuro, responsive (Flexbox, Grid y media query a 800 px)
+datos.js     Datos de ejemplo (arreglos y objetos). No hay base de datos todavía
+app.js       Lógica: navegación, formularios, validación, pantallas por rol y opciones de accesibilidad
+docs/        contraste.py y contraste.txt (verificación de colores, WCAG AA, tema claro y oscuro)
+
+ROLES DE DEMOSTRACIÓN (pantalla de inicio de sesión)
+Cliente · Personal operativo · Administrador
+
+ACCESIBILIDAD
+Botón "Tema" (Automático / Claro / Oscuro) y botones "Texto menor / Texto mayor" en el encabezado.
+Se puede navegar solo con teclado (Tab y Enter). Primer Tab: "Saltar al contenido".
+
+NOTA
+Los datos viven en memoria: al recargar la página vuelven a su valor inicial.

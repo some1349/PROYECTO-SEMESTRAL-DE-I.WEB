@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="SportRes: reserva de canchas deportivas en pocos pasos.">
+  <title>SportRes · Iniciar sesión</title>
+  <link rel="stylesheet" href="estilos.css">
+</head>
+<body>
+
+  <!-- Enlace para saltar el menú (teclado y lectores de pantalla) -->
+  <a class="saltar" id="saltar" href="#contenido">Saltar al contenido</a>
+
+  <!-- Aviso para lectores de pantalla: se lee cada vez que cambia -->
+  <div id="anuncio" class="solo-lector" role="status" aria-live="polite"></div>
+
+  <!-- ENCABEZADO: logo, menú principal (se llena con JavaScript según el rol) y usuario -->
+  <header>
+    <div class="barra">
+      <span class="logo"><span aria-hidden="true">⚽</span> SportRes</span>
+      <nav id="menu" aria-label="Menú principal"></nav>
+      <!-- Opciones de accesibilidad: tema claro/oscuro y tamaño del texto -->
+      <div class="herramientas" role="group" aria-label="Opciones de accesibilidad">
+        <button type="button" id="btn-tema">Tema: Automático</button>
+        <button type="button" id="btn-menos">Texto menor</button>
+        <button type="button" id="btn-mas">Texto mayor</button>
+      </div>
+      <div id="usuario"></div>
+    </div>
+  </header>
+
+  <div class="contenedor">
+    <!-- Menú lateral: solo lo usa el administrador -->
+    <nav id="lateral" class="lateral oculta" aria-label="Menú de administración"></nav>
+
+    <main id="contenido" tabindex="-1">
+      <!-- Ruta de migas de pan y mensajes de confirmación -->
+      <nav aria-label="Ruta de navegación"><p id="ruta" class="ruta"></p></nav>
+      <p id="mensaje" class="mensaje oculta"></p>
+
+      <!-- ===================== ACCESO ===================== -->
+      <section id="login" class="pantalla pantalla-form" aria-labelledby="t-login">
+        <div class="banner">
+          <h1 id="t-login" tabindex="-1">Iniciar sesión</h1>
+          <p>Reserva canchas de fútbol, baloncesto y pádel en tres pasos.</p>
+        </div>
+        <form id="form-login" class="tarjeta angosta" novalidate>
+          <label for="login-correo">Correo electrónico</label>
+          <input type="email" id="login-correo" autocomplete="email" placeholder="correo@ejemplo.com" required aria-describedby="error-login-correo">
+          <p class="error" id="error-login-correo"></p>
+
+          <label for="login-clave">Contraseña</label>
+          <input type="password" id="login-clave" autocomplete="current-password" required aria-describedby="error-login-clave">
+          <p class="error" id="error-login-clave"></p>
+          <label class="opcion"><input type="checkbox" data-mostrar="login-clave"> Mostrar contraseña</label>
+
+          <button type="submit" class="boton">Iniciar sesión</button>
+          <p>¿No tienes cuenta? <button type="button" class="enlace" data-ir="registro">Regístrate</button></p>
+        </form>
+        <div class="tarjeta angosta">
+          <h2>Entrar como (demostración)</h2>
+          <p class="ayuda">Atajo para probar cada rol sin escribir datos.</p>
+          <button type="button" class="boton claro" data-rol="cliente">Cliente</button>
+          <button type="button" class="boton claro" data-rol="operativo">Personal operativo</button>
+          <button type="button" class="boton claro" data-rol="admin">Administrador</button>
+        </div>
+      </section>
+
+      <section id="registro" class="pantalla pantalla-form oculta" aria-labelledby="t-registro">
+        <h1 id="t-registro" tabindex="-1">Crear cuenta</h1>
+        <p class="sub">Todos los campos son obligatorios.</p>
+        <form id="form-registro" class="tarjeta angosta" novalidate>
+          <fieldset>
+            <legend>Datos personales</legend>
+            <label for="reg-nombre">Nombre completo</label>
+            <input type="text" id="reg-nombre" autocomplete="name" required aria-describedby="error-reg-nombre">
+            <p class="error" id="error-reg-nombre"></p>
+            <label for="reg-correo">Correo electrónico</label>
+            <input type="email" id="reg-correo" autocomplete="email" required aria-describedby="error-reg-correo">
+            <p class="error" id="error-reg-correo"></p>
+            <label for="reg-clave">Contraseña (mínimo 6 caracteres)</label>
+            <input type="password" id="reg-clave" autocomplete="new-password" required aria-describedby="error-reg-clave">
+            <p class="error" id="error-reg-clave"></p>
+            <label class="opcion"><input type="checkbox" data-mostrar="reg-clave"> Mostrar contraseña</label>
+          </fieldset>
+          <button type="submit" class="boton">Crear cuenta</button>
+          <button type="button" class="boton claro" data-ir="login">Ya tengo cuenta</button>
+        </form>
+      </section>
+
+      <!-- ===================== CLIENTE ===================== -->
+      <section id="buscar" class="pantalla oculta" aria-labelledby="t-buscar">
+        <h1 id="t-buscar" tabindex="-1">Buscar instalaciones</h1>
+        <ol class="pasos" aria-label="Pasos de la reserva">
+          <li aria-current="step"><span class="n">1</span> Elegir instalación</li>
+          <li><span class="n">2</span> Elegir horario</li>
+          <li><span class="n">3</span> Confirmar</li>
+        </ol>
+        <div class="tarjeta">
+          <div class="fila">
+            <div>
+              <label for="filtro-deporte">Deporte</label>
+              <select id="filtro-deporte">
+                <option value="todos">Todos</option>
+                <option>Fútbol</option>
+                <option>Baloncesto</option>
+                <option>Pádel</option>
+              </select>
+            </div>
+            <div>
+              <label for="filtro-fecha">Fecha</label>
+              <input type="date" id="filtro-fecha" value="2026-10-15">
+            </div>
+          </div>
+        </div>
+        <div id="lista-instalaciones" class="cuadricula"></div>
+      </section>
+
+      <section id="detalle" class="pantalla oculta" aria-labelledby="detalle-titulo">
+        <h1 id="detalle-titulo" tabindex="-1">Instalación</h1>
+        <ol class="pasos" aria-label="Pasos de la reserva">
+          <li><span class="n">1</span> Elegir instalación</li>
+          <li aria-current="step"><span class="n">2</span> Elegir horario</li>
+          <li><span class="n">3</span> Confirmar</li>
+        </ol>
+        <div class="tarjeta" id="detalle-info"></div>
+        <div class="tarjeta">
+          <h2>Horarios disponibles</h2>
+          <div id="lista-horarios" class="horarios"></div>
+          <p class="leyenda"><span><span class="estado libre">Disponible</span> se puede elegir</span> <span><span class="estado ocupada">No disponible</span> tachado, ocupado o bloqueado</span></p>
+        </div>
+        <button type="button" class="boton claro" data-ir="buscar">Volver a instalaciones</button>
+      </section>
+
+      <section id="confirmar" class="pantalla oculta" aria-labelledby="t-confirmar">
+        <h1 id="t-confirmar" tabindex="-1">Confirmar reserva</h1>
+        <ol class="pasos" aria-label="Pasos de la reserva">
+          <li><span class="n">1</span> Elegir instalación</li>
+          <li><span class="n">2</span> Elegir horario</li>
+          <li aria-current="step"><span class="n">3</span> Confirmar</li>
+        </ol>
+        <div class="tarjeta">
+          <p class="sub">Revisa los datos antes de confirmar.</p>
+          <div class="tabla-caja"><table id="tabla-confirmar"></table></div>
+          <button type="button" class="boton" id="btn-confirmar">Confirmar reserva</button>
+          <button type="button" class="boton claro" data-ir="detalle">Cambiar horario</button>
+        </div>
+      </section>
+
+      <section id="exito" class="pantalla oculta" aria-labelledby="t-exito">
+        <h1 id="t-exito" tabindex="-1">¡Reserva confirmada!</h1>
+        <div class="tarjeta">
+          <p class="aviso" id="exito-texto"></p>
+          <button type="button" class="boton" data-ir="mis-reservas">Ver mis reservas</button>
+          <button type="button" class="boton claro" data-ir="buscar">Hacer otra reserva</button>
+        </div>
+      </section>
+
+      <section id="mis-reservas" class="pantalla oculta" aria-labelledby="t-mis">
+        <h1 id="t-mis" tabindex="-1">Mis reservas</h1>
+        <p class="sub">Puedes modificar o cancelar las reservas confirmadas.</p>
+        <div class="tabla-caja"><table id="tabla-mis-reservas"></table></div>
+        <button type="button" class="boton" data-ir="buscar">Nueva reserva</button>
+      </section>
+
+      <section id="modificar" class="pantalla pantalla-form oculta" aria-labelledby="t-mod">
+        <h1 id="t-mod" tabindex="-1">Modificar reserva</h1>
+        <form id="form-modificar" class="tarjeta angosta" novalidate>
+          <p id="modificar-info"></p>
+          <label for="mod-fecha">Nueva fecha</label>
+          <input type="date" id="mod-fecha" required aria-describedby="error-mod-fecha">
+          <p class="error" id="error-mod-fecha"></p>
+          <label for="mod-hora">Nuevo horario</label>
+          <select id="mod-hora"></select>
+          <button type="submit" class="boton">Guardar cambios</button>
+          <button type="button" class="boton claro" data-ir="mis-reservas">No modificar</button>
+        </form>
+      </section>
+
+      <section id="perfil" class="pantalla pantalla-form oculta" aria-labelledby="t-perfil">
+        <h1 id="t-perfil" tabindex="-1">Mi perfil</h1>
+        <form id="form-perfil" class="tarjeta angosta" novalidate>
+          <label for="perfil-nombre">Nombre</label>
+          <input type="text" id="perfil-nombre" value="Ana Pérez" autocomplete="name" required aria-describedby="error-perfil-nombre">
+          <p class="error" id="error-perfil-nombre"></p>
+          <label for="perfil-correo">Correo</label>
+          <input type="email" id="perfil-correo" value="ana@ejemplo.com" autocomplete="email">
+          <button type="submit" class="boton">Guardar</button>
+        </form>
+      </section>
+
+      <!-- ===================== PERSONAL OPERATIVO ===================== -->
+      <section id="op-dia" class="pantalla oculta" aria-labelledby="t-dia">
+        <h1 id="t-dia" tabindex="-1">Reservas del día</h1>
+        <p class="sub">Registra la llegada de los clientes (check-in).</p>
+        <div class="tabla-caja"><table id="tabla-dia"></table></div>
+      </section>
+
+      <section id="presencial" class="pantalla pantalla-form oculta" aria-labelledby="t-pres">
+        <h1 id="t-pres" tabindex="-1">Reserva presencial</h1>
+        <form id="form-presencial" class="tarjeta angosta" novalidate>
+          <label for="pres-nombre">Nombre del cliente</label>
+          <input type="text" id="pres-nombre" required aria-describedby="error-pres-nombre">
+          <p class="error" id="error-pres-nombre"></p>
+          <label for="pres-instalacion">Instalación</label>
+          <select id="pres-instalacion"></select>
+          <label for="pres-hora">Horario (hoy)</label>
+          <select id="pres-hora"></select>
+          <button type="submit" class="boton">Registrar reserva</button>
+        </form>
+      </section>
+
+      <section id="disponibilidad" class="pantalla oculta" aria-labelledby="t-disp">
+        <h1 id="t-disp" tabindex="-1">Disponibilidad</h1>
+        <p class="sub">Estado de cada instalación hoy (15/10/2026).</p>
+        <div class="tabla-caja"><table id="tabla-disponibilidad"></table></div>
+      </section>
+
+      <!-- ===================== ADMINISTRADOR ===================== -->
+      <section id="a-panel" class="pantalla oculta" aria-labelledby="t-panel">
+        <h1 id="t-panel" tabindex="-1">Panel del administrador</h1>
+        <p class="sub">Resumen de la actividad de hoy.</p>
+        <div class="cuadricula" id="indicadores"></div>
+        <div class="tarjeta">
+          <h2>Accesos rápidos</h2>
+          <button type="button" class="boton" data-ir="a-instalaciones">Instalaciones y horarios</button>
+          <button type="button" class="boton" data-ir="a-bloqueos">Bloqueos</button>
+          <button type="button" class="boton" data-ir="a-reportes">Reportes</button>
+          <button type="button" class="boton" data-ir="a-usuarios">Usuarios y roles</button>
+        </div>
+      </section>
+
+      <section id="a-instalaciones" class="pantalla oculta" aria-labelledby="t-ainst">
+        <h1 id="t-ainst" tabindex="-1">Instalaciones y horarios</h1>
+        <div class="tabla-caja"><table id="tabla-instalaciones"></table></div>
+      </section>
+
+      <section id="a-bloqueos" class="pantalla oculta" aria-labelledby="t-bloq">
+        <h1 id="t-bloq" tabindex="-1">Bloqueos de horario</h1>
+        <form id="form-bloqueo" class="tarjeta angosta" novalidate>
+          <label for="blq-instalacion">Instalación</label>
+          <select id="blq-instalacion"></select>
+          <label for="blq-hora">Horario (hoy)</label>
+          <select id="blq-hora"></select>
+          <label for="blq-motivo">Motivo</label>
+          <input type="text" id="blq-motivo" placeholder="Ej.: mantenimiento" required aria-describedby="error-blq-motivo">
+          <p class="error" id="error-blq-motivo"></p>
+          <button type="submit" class="boton">Bloquear horario</button>
+        </form>
+        <div class="tabla-caja"><table id="tabla-bloqueos"></table></div>
+      </section>
+
+      <section id="a-reportes" class="pantalla oculta" aria-labelledby="t-rep">
+        <h1 id="t-rep" tabindex="-1">Reportes</h1>
+        <div class="tabla-caja"><table id="tabla-reportes"></table></div>
+        <p class="sub">Los ingresos cuentan solo las reservas asistidas.</p>
+      </section>
+
+      <section id="a-usuarios" class="pantalla oculta" aria-labelledby="t-usu">
+        <h1 id="t-usu" tabindex="-1">Usuarios y roles</h1>
+        <div class="tabla-caja"><table id="tabla-usuarios"></table></div>
+      </section>
+    </main>
+  </div>
+
+  <footer>
+    SportRes · Fase 3 · Grupo 2 · 1SF133 · Ingeniería Web
+  </footer>
+
+  <!-- Primero los datos, luego la lógica (defer: se ejecuta cuando el HTML ya cargó) -->
+  <script src="datos.js" defer></script>
+  <script src="app.js" defer></script>
+</body>
+</html>
